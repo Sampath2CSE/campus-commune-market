@@ -67,11 +67,11 @@ const CreateListing = () => {
 
   return (
     <Layout>
-      <div className="max-w-2xl mx-auto px-6 py-8">
-        <Card className="border-0 shadow-xl bg-white/80 backdrop-blur-sm">
+      <div className="max-w-2xl mx-auto px-4 py-6">
+        <Card className="border-0 shadow-sm bg-card">
           <CardHeader>
-            <CardTitle className="text-2xl font-bold text-[#1A1A1A]">Create New Listing</CardTitle>
-            <CardDescription className="text-gray-600">
+            <CardTitle className="text-xl md:text-2xl font-bold text-foreground">Create New Listing</CardTitle>
+            <CardDescription className="text-muted-foreground">
               Share your item with students at {user?.college}
             </CardDescription>
           </CardHeader>
@@ -84,7 +84,7 @@ const CreateListing = () => {
                   placeholder="What are you selling?"
                   value={formData.title}
                   onChange={(e) => setFormData(prev => ({ ...prev, title: e.target.value }))}
-                  className="border-gray-200 focus:border-[#6C63FF]"
+                  className="w-full"
                 />
               </div>
 
@@ -96,7 +96,7 @@ const CreateListing = () => {
                   rows={4}
                   value={formData.description}
                   onChange={(e) => setFormData(prev => ({ ...prev, description: e.target.value }))}
-                  className="border-gray-200 focus:border-[#6C63FF]"
+                  className="w-full"
                 />
               </div>
 
@@ -109,14 +109,14 @@ const CreateListing = () => {
                     placeholder="0.00"
                     value={formData.price}
                     onChange={(e) => setFormData(prev => ({ ...prev, price: e.target.value }))}
-                    className="border-gray-200 focus:border-[#6C63FF]"
+                    className="w-full"
                   />
                 </div>
 
                 <div className="space-y-2">
                   <Label>Category *</Label>
                   <Select value={formData.category} onValueChange={(value) => setFormData(prev => ({ ...prev, category: value }))}>
-                    <SelectTrigger className="border-gray-200 focus:border-[#6C63FF]">
+                    <SelectTrigger className="w-full">
                       <SelectValue placeholder="Select category" />
                     </SelectTrigger>
                     <SelectContent>
@@ -158,7 +158,7 @@ const CreateListing = () => {
                   multiple
                   accept="image/*"
                   onChange={handleImageUpload}
-                  className="border-gray-200 focus:border-[#6C63FF]"
+                  className="w-full"
                 />
                 <p className="text-xs text-gray-500">
                   Upload up to 5 photos of your item
@@ -181,7 +181,7 @@ const CreateListing = () => {
               <div className="pt-4">
                 <Button
                   type="submit"
-                  className="w-full bg-gradient-to-r from-[#6C63FF] to-[#00BFA6] hover:opacity-90 text-white"
+                  className="w-full bg-gradient-to-r from-primary to-accent hover:opacity-90 text-primary-foreground"
                   disabled={isLoading}
                 >
                   {isLoading ? 'Creating Listing...' : 'Create Listing'}
