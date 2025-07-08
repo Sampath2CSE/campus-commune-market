@@ -19,15 +19,16 @@ const Login = () => {
     e.preventDefault();
     setIsLoading(true);
     
-    try {
-      await login(email, password);
+    const { error } = await login(email, password);
+    
+    if (error) {
+      toast.error(error);
+    } else {
       toast.success('Welcome back!');
       navigate('/marketplace');
-    } catch (error) {
-      toast.error('Login failed. Please try again.');
-    } finally {
-      setIsLoading(false);
     }
+    
+    setIsLoading(false);
   };
 
   return (

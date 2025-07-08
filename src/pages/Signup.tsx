@@ -13,6 +13,7 @@ const Signup = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const [college, setCollege] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const { signup } = useAuth();
   const navigate = useNavigate();
@@ -30,17 +31,23 @@ const Signup = () => {
       return;
     }
 
+    if (!college.trim()) {
+      toast.error('Please enter your college name');
+      return;
+    }
+
     setIsLoading(true);
     
-    try {
-      await signup(name, email, password);
-      toast.success('Account created successfully! Welcome to CampusMarket!');
-      navigate('/marketplace');
-    } catch (error: any) {
-      toast.error(error.message || 'Signup failed. Please try again.');
-    } finally {
-      setIsLoading(false);
+    const { error } = await signup(name, email, password, college);
+    
+    if (error) {
+      toast.error(error);
+    } else {
+      toast.success('Account created! Please check your email to verify your account.');
+      navigate('/login');
     }
+    
+    setIsLoading(false);
   };
 
   return (
@@ -91,6 +98,19 @@ const Signup = () => {
                 <p className="text-xs text-gray-500">
                   Must be a valid .edu email address
                 </p>
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="college">College/University</Label>
+                <Input
+                  id="college"
+                  type="text"
+                  placeholder="e.g., Harvard University"
+                  value={college}
+                  onChange={(e) => setCollege(e.target.value)}
+                  required
+                  className="border-gray-200 focus:border-[#6C63FF]"
+                />
               </div>
               
               <div className="space-y-2">

@@ -21,8 +21,8 @@ const Layout = ({ children }: LayoutProps) => {
   const location = useLocation();
   const navigate = useNavigate();
 
-  const handleLogout = () => {
-    logout();
+  const handleLogout = async () => {
+    await logout();
     navigate('/');
   };
 
