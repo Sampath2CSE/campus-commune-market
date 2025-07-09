@@ -38,14 +38,18 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   useEffect(() => {
     // Set up auth state listener FIRST
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
-      async (event, session) => {
+      (event, session) => {
         setSession(session);
+        setLoading(false);
+        
+        // Defer user profile fetch to avoid deadlock
         if (session?.user) {
-          await fetchUserProfile(session.user);
+          setTimeout(() => {
+            fetchUserProfile(session.user);
+          }, 0);
         } else {
           setUser(null);
         }
-        setLoading(false);
       }
     );
 
