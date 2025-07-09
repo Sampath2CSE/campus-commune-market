@@ -6,7 +6,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
 import { ExternalLink, Star, TrendingUp } from 'lucide-react';
-import { getStudentDeals, type Deal } from '@/services/dealsService';
+import { dealsService, Deal } from '@/services/dealsService';
 
 const Deals = () => {
   const [deals, setDeals] = useState<Deal[]>([]);
@@ -19,9 +19,12 @@ const Deals = () => {
   useEffect(() => {
     const fetchDeals = async () => {
       try {
-        const dealsData = await getStudentDeals();
-        setDeals(dealsData);
-        setFilteredDeals(dealsData);
+        const result = await dealsService.fetchDeals();
+        setDeals(result.deals);
+        setFilteredDeals(result.deals);
+        if (result.error) {
+          console.warn('Deals service warning:', result.error);
+        }
       } catch (error) {
         console.error('Failed to fetch deals:', error);
       } finally {
@@ -68,7 +71,7 @@ const Deals = () => {
   ];
 
   const topPicks = filteredDeals
-    .filter(deal => deal.rating >= 4.5)
+    .filter(deal => deal.rating && deal.rating >= 4.5)
     .slice(0, 3);
 
   if (loading) {
@@ -120,26 +123,26 @@ const Deals = () => {
                   </CardHeader>
                   <CardContent className="space-y-4">
                     <img
-                      src={deal.image}
+                      src={deal.image_url || "https://images.unsplash.com/photo-1496181133206-80ce9b88a853"}
                       alt={deal.title}
                       className="w-full h-48 object-cover rounded-md"
                     />
                     <div>
                       <h3 className="font-semibold text-foreground line-clamp-2">{deal.title}</h3>
-                      <p className="text-sm text-muted-foreground mt-1">{deal.store}</p>
+                      <p className="text-sm text-muted-foreground mt-1">{deal.store_name}</p>
                     </div>
                     <div className="flex items-center justify-between">
                       <span className="text-2xl font-bold text-primary">${deal.price}</span>
-                      {deal.originalPrice && (
+                      {deal.original_price && (
                         <span className="text-sm text-muted-foreground line-through">
-                          ${deal.originalPrice}
+                          ${deal.original_price}
                         </span>
                       )}
                     </div>
                   </CardContent>
                   <CardFooter>
                     <Button asChild className="w-full">
-                      <a href={deal.url} target="_blank" rel="noopener noreferrer">
+                      <a href={deal.affiliate_url} target="_blank" rel="noopener noreferrer">
                         <ExternalLink className="h-4 w-4 mr-2" />
                         Buy Now
                       </a>
@@ -192,22 +195,22 @@ const Deals = () => {
               <CardHeader className="pb-3">
                 <div className="flex items-center justify-between">
                   <Badge variant="outline">{deal.category}</Badge>
-                  {deal.discount && (
+                  {deal.discount_percentage && (
                     <Badge className="bg-destructive/10 text-destructive border-destructive/20">
-                      -{deal.discount}%
+                      -{deal.discount_percentage}%
                     </Badge>
                   )}
                 </div>
               </CardHeader>
               <CardContent className="space-y-4">
                 <img
-                  src={deal.image}
+                  src={deal.image_url || "https://images.unsplash.com/photo-1496181133206-80ce9b88a853"}
                   alt={deal.title}
                   className="w-full h-48 object-cover rounded-md group-hover:scale-105 transition-transform"
                 />
                 <div>
                   <h3 className="font-semibold text-foreground line-clamp-2">{deal.title}</h3>
-                  <p className="text-sm text-muted-foreground mt-1">{deal.store}</p>
+                  <p className="text-sm text-muted-foreground mt-1">{deal.store_name}</p>
                   <div className="flex items-center gap-1 mt-2">
                     <Star className="h-4 w-4 fill-primary text-primary" />
                     <span className="text-sm text-muted-foreground">{deal.rating}</span>
@@ -215,16 +218,16 @@ const Deals = () => {
                 </div>
                 <div className="flex items-center justify-between">
                   <span className="text-xl font-bold text-primary">${deal.price}</span>
-                  {deal.originalPrice && (
+                  {deal.original_price && (
                     <span className="text-sm text-muted-foreground line-through">
-                      ${deal.originalPrice}
+                      ${deal.original_price}
                     </span>
                   )}
                 </div>
               </CardContent>
               <CardFooter>
                 <Button asChild className="w-full" variant="outline">
-                  <a href={deal.url} target="_blank" rel="noopener noreferrer">
+                  <a href={deal.affiliate_url} target="_blank" rel="noopener noreferrer">
                     <ExternalLink className="h-4 w-4 mr-2" />
                     View Deal
                   </a>

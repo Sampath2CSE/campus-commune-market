@@ -35,6 +35,63 @@ export type Database = {
         }
         Relationships: []
       }
+      deals: {
+        Row: {
+          affiliate_url: string
+          category: string
+          created_at: string
+          discount_percentage: number | null
+          expires_at: string | null
+          external_id: string
+          id: string
+          image_url: string | null
+          is_featured: boolean | null
+          original_price: number | null
+          price: number
+          rating: number | null
+          reviews_count: number | null
+          store_name: string
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          affiliate_url: string
+          category: string
+          created_at?: string
+          discount_percentage?: number | null
+          expires_at?: string | null
+          external_id: string
+          id?: string
+          image_url?: string | null
+          is_featured?: boolean | null
+          original_price?: number | null
+          price: number
+          rating?: number | null
+          reviews_count?: number | null
+          store_name: string
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          affiliate_url?: string
+          category?: string
+          created_at?: string
+          discount_percentage?: number | null
+          expires_at?: string | null
+          external_id?: string
+          id?: string
+          image_url?: string | null
+          is_featured?: boolean | null
+          original_price?: number | null
+          price?: number
+          rating?: number | null
+          reviews_count?: number | null
+          store_name?: string
+          title?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       listings: {
         Row: {
           category: string
