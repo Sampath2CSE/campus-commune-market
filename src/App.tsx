@@ -14,6 +14,7 @@ import CreateListing from "./pages/CreateListing";
 import ListingDetail from "./pages/ListingDetail";
 import Messages from "./pages/Messages";
 import Profile from "./pages/Profile";
+import Deals from "./pages/Deals";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -33,6 +34,7 @@ const App = () => (
             <Route path="/create-listing" element={<ProtectedRoute><CreateListing /></ProtectedRoute>} />
             <Route path="/listing/:id" element={<ProtectedRoute><ListingDetail /></ProtectedRoute>} />
             <Route path="/messages" element={<ProtectedRoute><Messages /></ProtectedRoute>} />
+            <Route path="/deals" element={<ProtectedRoute><Deals /></ProtectedRoute>} />
             <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
             <Route path="*" element={<NotFound />} />
           </Routes>

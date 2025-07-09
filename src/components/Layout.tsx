@@ -10,7 +10,7 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
-import { Menu, Home, Plus, MessageCircle, User } from 'lucide-react';
+import { Menu, Home, Plus, MessageCircle, User, Tag } from 'lucide-react';
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -96,6 +96,17 @@ const Layout = ({ children }: LayoutProps) => {
                     Messages
                   </Link>
                   <Link
+                    to="/deals"
+                    className={`flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
+                      isActive('/deals')
+                        ? 'bg-primary text-primary-foreground'
+                        : 'text-foreground hover:bg-accent hover:text-accent-foreground'
+                    }`}
+                  >
+                    <Tag className="h-4 w-4" />
+                    Student Deals
+                  </Link>
+                  <Link
                     to="/profile"
                     className={`flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
                       isActive('/profile')
@@ -157,6 +168,14 @@ const Layout = ({ children }: LayoutProps) => {
               }`}
             >
               Messages
+            </Link>
+            <Link
+              to="/deals"
+              className={`text-sm font-medium transition-colors hover:text-primary ${
+                isActive('/deals') ? 'text-primary' : 'text-muted-foreground'
+              }`}
+            >
+              Student Deals
             </Link>
           </nav>
 
@@ -236,6 +255,17 @@ const Layout = ({ children }: LayoutProps) => {
           >
             <MessageCircle className="h-5 w-5" />
             <span className="text-xs font-medium">Messages</span>
+          </Link>
+          <Link
+            to="/deals"
+            className={`flex flex-col items-center gap-1 p-2 rounded-lg transition-colors ${
+              isActive('/deals')
+                ? 'text-primary bg-primary/10'
+                : 'text-muted-foreground hover:text-foreground'
+            }`}
+          >
+            <Tag className="h-5 w-5" />
+            <span className="text-xs font-medium">Deals</span>
           </Link>
           <Link
             to="/profile"
