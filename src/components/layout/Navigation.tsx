@@ -31,14 +31,6 @@ export const Navigation = ({ isActive }: NavigationProps) => {
       >
         Messages
       </Link>
-      <Link
-        to="/deals"
-        className={`text-sm font-medium transition-colors hover:text-primary ${
-          isActive('/deals') ? 'text-primary' : 'text-muted-foreground'
-        }`}
-      >
-        Student Deals
-      </Link>
     </nav>
   );
 };

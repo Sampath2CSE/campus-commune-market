@@ -20,7 +20,7 @@ const CreateListing = () => {
     title: '',
     description: '',
     price: '',
-    type: 'sell' as 'sell' | 'rent' | 'buy',
+    type: 'sell' as 'sell' | 'rent',
     category: '',
     images: [] as string[]
   });
@@ -72,7 +72,7 @@ const CreateListing = () => {
           <CardHeader>
             <CardTitle className="text-xl md:text-2xl font-bold text-foreground">Create New Listing</CardTitle>
             <CardDescription className="text-muted-foreground">
-              Share your item with students at {user?.college}
+              Share your item with students across all colleges
             </CardDescription>
           </CardHeader>
           <CardContent>
@@ -132,7 +132,7 @@ const CreateListing = () => {
                 <Label>Listing Type *</Label>
                 <RadioGroup
                   value={formData.type}
-                  onValueChange={(value: 'sell' | 'rent' | 'buy') => setFormData(prev => ({ ...prev, type: value }))}
+                  onValueChange={(value: 'sell' | 'rent') => setFormData(prev => ({ ...prev, type: value }))}
                   className="flex space-x-6"
                 >
                   <div className="flex items-center space-x-2">
@@ -143,26 +143,34 @@ const CreateListing = () => {
                     <RadioGroupItem value="rent" id="rent" />
                     <Label htmlFor="rent">For Rent</Label>
                   </div>
-                  <div className="flex items-center space-x-2">
-                    <RadioGroupItem value="buy" id="buy" />
-                    <Label htmlFor="buy">Looking to Buy</Label>
-                  </div>
                 </RadioGroup>
               </div>
 
-              <div className="space-y-2">
+              <div className="space-y-3">
                 <Label htmlFor="images">Photos</Label>
-                <Input
-                  id="images"
-                  type="file"
-                  multiple
-                  accept="image/*"
-                  onChange={handleImageUpload}
-                  className="w-full"
-                />
-                <p className="text-xs text-gray-500">
-                  Upload up to 5 photos of your item
-                </p>
+                <div className="relative">
+                  <div className="border-2 border-dashed border-primary/30 rounded-lg p-8 text-center bg-gradient-to-br from-primary/5 to-accent/5 hover:from-primary/10 hover:to-accent/10 transition-colors group cursor-pointer">
+                    <input
+                      id="images"
+                      type="file"
+                      multiple
+                      accept="image/*"
+                      onChange={handleImageUpload}
+                      className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+                    />
+                    <div className="flex flex-col items-center justify-center space-y-3">
+                      <div className="w-12 h-12 bg-gradient-to-br from-primary to-accent rounded-full flex items-center justify-center group-hover:scale-110 transition-transform">
+                        <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+                        </svg>
+                      </div>
+                      <div>
+                        <p className="text-foreground font-medium">Drop files here or click to browse</p>
+                        <p className="text-sm text-muted-foreground mt-1">Upload up to 5 photos (JPG, PNG, WEBP)</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
 
               {formData.images.length > 0 && (

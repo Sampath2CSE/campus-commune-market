@@ -32,16 +32,23 @@ const Profile = () => {
     <Layout>
       <div className="max-w-4xl mx-auto px-6 py-8">
         <div className="flex items-center space-x-6 mb-8">
-          <Avatar className="h-24 w-24">
-            <AvatarImage src={user?.avatar} alt={user?.name} />
-            <AvatarFallback className="bg-[#6C63FF] text-white text-2xl">
-              {user?.name?.charAt(0)}
-            </AvatarFallback>
-          </Avatar>
+          <div className="relative">
+            <Avatar className="h-24 w-24">
+              <AvatarImage src={user?.avatar} alt={user?.name} />
+              <AvatarFallback className="bg-gradient-to-br from-primary to-accent text-white text-2xl">
+                {user?.name?.charAt(0)}
+              </AvatarFallback>
+            </Avatar>
+            <button className="absolute -bottom-2 -right-2 w-8 h-8 bg-gradient-to-br from-primary to-accent text-white rounded-full flex items-center justify-center hover:scale-110 transition-transform shadow-lg">
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+              </svg>
+            </button>
+          </div>
           <div>
-            <h1 className="text-3xl font-bold text-[#1A1A1A]">{user?.name}</h1>
-            <p className="text-gray-600">{user?.email}</p>
-            <Badge className="mt-2 bg-[#6C63FF]/10 text-[#6C63FF] border-[#6C63FF]/20">
+            <h1 className="text-3xl font-bold text-foreground">{user?.name}</h1>
+            <p className="text-muted-foreground">{user?.email}</p>
+            <Badge className="mt-2 bg-primary/10 text-primary border-primary/20">
               {user?.college}
             </Badge>
           </div>
@@ -55,11 +62,11 @@ const Profile = () => {
 
           <TabsContent value="listings" className="space-y-6">
             <div className="flex justify-between items-center">
-              <h2 className="text-2xl font-bold text-[#1A1A1A]">
+              <h2 className="text-2xl font-bold text-foreground">
                 My Listings ({userListings.length})
               </h2>
               <Link to="/create-listing">
-                <Button className="bg-gradient-to-r from-[#6C63FF] to-[#00BFA6] hover:opacity-90 text-white">
+                <Button className="bg-gradient-to-r from-primary to-accent hover:opacity-90 text-primary-foreground">
                   + Add New Listing
                 </Button>
               </Link>
@@ -69,14 +76,14 @@ const Profile = () => {
               <Card className="border-0 shadow-lg bg-white/80">
                 <CardContent className="p-12 text-center">
                   <div className="text-6xl mb-4">📦</div>
-                  <h3 className="text-xl font-semibold text-[#1A1A1A] mb-2">
+                  <h3 className="text-xl font-semibold text-foreground mb-2">
                     No listings yet
                   </h3>
-                  <p className="text-gray-600 mb-6">
+                  <p className="text-muted-foreground mb-6">
                     Start by creating your first listing
                   </p>
                   <Link to="/create-listing">
-                    <Button className="bg-gradient-to-r from-[#6C63FF] to-[#00BFA6] hover:opacity-90 text-white">
+                    <Button className="bg-gradient-to-r from-primary to-accent hover:opacity-90 text-primary-foreground">
                       Create Listing
                     </Button>
                   </Link>
@@ -113,17 +120,17 @@ const Profile = () => {
                           </div>
                         </div>
                         <div className="p-4">
-                          <h3 className="font-semibold text-[#1A1A1A] mb-2 line-clamp-1">
+                          <h3 className="font-semibold text-foreground mb-2 line-clamp-1">
                             {listing.title}
                           </h3>
-                          <p className="text-sm text-gray-600 mb-3 line-clamp-2">
+                          <p className="text-sm text-muted-foreground mb-3 line-clamp-2">
                             {listing.description}
                           </p>
                           <div className="flex items-center justify-between">
                             <Badge variant="outline" className="text-xs">
                               {listing.category}
                             </Badge>
-                            <span className="text-xs text-gray-500">
+                            <span className="text-xs text-muted-foreground">
                               {new Date(listing.createdAt).toLocaleDateString()}
                             </span>
                           </div>
@@ -139,7 +146,7 @@ const Profile = () => {
           <TabsContent value="profile" className="space-y-6">
             <Card className="border-0 shadow-lg bg-white/80 backdrop-blur-sm">
               <CardHeader>
-                <CardTitle className="text-xl font-bold text-[#1A1A1A]">
+                <CardTitle className="text-xl font-bold text-foreground">
                   Profile Information
                 </CardTitle>
                 <CardDescription>
@@ -154,7 +161,7 @@ const Profile = () => {
                     value={profileData.name}
                     onChange={(e) => setProfileData(prev => ({ ...prev, name: e.target.value }))}
                     disabled={!isEditing}
-                    className="border-gray-200 focus:border-[#6C63FF]"
+                    className="border-border focus:border-primary"
                   />
                 </div>
 
@@ -164,9 +171,9 @@ const Profile = () => {
                     id="email"
                     value={profileData.email}
                     disabled
-                    className="border-gray-200 bg-gray-50"
+                    className="border-border bg-muted"
                   />
-                  <p className="text-xs text-gray-500">
+                  <p className="text-xs text-muted-foreground">
                     Email cannot be changed for security reasons
                   </p>
                 </div>
@@ -176,9 +183,9 @@ const Profile = () => {
                   <Input
                     value={user?.college || ''}
                     disabled
-                    className="border-gray-200 bg-gray-50"
+                    className="border-border bg-muted"
                   />
-                  <p className="text-xs text-gray-500">
+                  <p className="text-xs text-muted-foreground">
                     College is automatically assigned based on your email domain
                   </p>
                 </div>
@@ -188,7 +195,7 @@ const Profile = () => {
                     <>
                       <Button
                         onClick={handleSaveProfile}
-                        className="bg-gradient-to-r from-[#6C63FF] to-[#00BFA6] hover:opacity-90 text-white"
+                        className="bg-gradient-to-r from-primary to-accent hover:opacity-90 text-primary-foreground"
                       >
                         Save Changes
                       </Button>
@@ -203,7 +210,7 @@ const Profile = () => {
                     <Button
                       onClick={() => setIsEditing(true)}
                       variant="outline"
-                      className="border-[#6C63FF] text-[#6C63FF] hover:bg-[#6C63FF]/10"
+                      className="border-primary text-primary hover:bg-primary/10"
                     >
                       Edit Profile
                     </Button>

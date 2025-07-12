@@ -25,11 +25,8 @@ const Marketplace = () => {
       return;
     }
 
-    // Filter listings by user's college
-    const userCollegeListings = mockListings.filter(
-      listing => listing.college === user?.college
-    );
-    setListings(userCollegeListings);
+    // Show listings from all colleges
+    setListings(mockListings);
   }, [isAuthenticated, user, navigate]);
 
   const filteredListings = listings.filter(listing => {
@@ -54,7 +51,7 @@ const Marketplace = () => {
         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4">
           <div>
             <h1 className="text-2xl md:text-3xl font-bold text-foreground">Marketplace</h1>
-            <p className="text-muted-foreground mt-1">Items from students at {user?.college}</p>
+            <p className="text-muted-foreground mt-1">Items from students across all colleges</p>
           </div>
           <Link to="/create-listing" className="hidden sm:block">
             <Button className="bg-gradient-to-r from-primary to-accent hover:opacity-90 text-primary-foreground">
@@ -91,7 +88,6 @@ const Marketplace = () => {
                 <SelectItem value="all">All Types</SelectItem>
                 <SelectItem value="sell">For Sale</SelectItem>
                 <SelectItem value="rent">For Rent</SelectItem>
-                <SelectItem value="buy">Wanted</SelectItem>
               </SelectContent>
             </Select>
           </div>
@@ -121,8 +117,7 @@ const Marketplace = () => {
                          variant="secondary"
                          className="text-xs px-2 py-1 bg-background/90 text-foreground"
                        >
-                         {listing.type === 'sell' ? 'Sale' : 
-                          listing.type === 'rent' ? 'Rent' : 'Wanted'}
+                          {listing.type === 'sell' ? 'Sale' : 'Rent'}
                        </Badge>
                      </div>
                      <div className="absolute top-2 right-2">
